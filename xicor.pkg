@@ -1,0 +1,20 @@
+v 3
+d xicor: Stata module to compute xi correlation matrix
+d
+d
+d {cmd:xicor} computes a matrix of xi correlation coefficients 
+d (Chatterjee, 2021).
+d
+d KW: correlation
+d KW: spearman
+d KW: association
+d
+d Requires: Stata version 16.1
+d
+d Distribution-Date: 20240430
+d
+d Author: Daniel Klein
+d Support: email klein.daniel.81@gmail.com
+d
+f xicor.ado
+f xicor.sthlp

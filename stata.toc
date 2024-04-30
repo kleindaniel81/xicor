@@ -1,0 +1,2 @@
+v 3
+p xicor Stata module to compute xi correlation matrix
