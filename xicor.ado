@@ -1,9 +1,9 @@
-*! version 0.1.0  30apr2024
+*! version 0.2.0  09aug2024
 program xicor , rclass
     
     version 16.1
     
-    syntax varlist(min=2 numeric) [ if ] [ in ]
+    syntax varlist(min=2 numeric) [ if ] [ in ] [ , SYMmetric ]
     
     marksample touse
     
@@ -12,8 +12,15 @@ program xicor , rclass
     
     mata : xicor_ado(tokens(st_local("varlist")),"`touse'")
     
+    if ("`symmetric'" == "symmetric") {
+        
+        mata : xicor_makesymmetric()
+        local symmetric "_s"
+        
+    }
+    
     display as txt "(Obs=" r(N) ")"
-    matlist r(xi)
+    matlist r(xi`symmetric')
     
     return add
     
@@ -33,7 +40,7 @@ mata set matastrict   on
 mata set mataoptimize on
 
 
-    /*  _________________________________  entry point ado  */
+    /*  _________________________________  entry points ado  */
 
 void xicor_ado(
     
@@ -52,6 +59,33 @@ void xicor_ado(
     st_matrix("r(xi)",xicor_mat(XY))
     st_matrixcolstripe("r(xi)",(J(cols(varlist),1,""),varlist'))
     st_matrixrowstripe("r(xi)",(J(cols(varlist),1,""),varlist'))
+}
+
+
+void xicor_makesymmetric()
+{
+    real matrix xi_s
+    real scalar i
+    real matrix idx
+    
+    
+    /*
+        Take the maximum of xi(X,Y) and xi(Y,X)
+        (Chatterjee, 2021, 2010)
+    */
+    
+    xi_s = st_matrix("r(xi)")
+    
+    for (i=2; i<=rows(xi_s); i++) {
+        
+        idx = (i,(i-1)\ .,(i-1))
+        xi_s[|idx|] = rowmax((xi_s[|idx|],xi_s[|idx[,2..1]|]'))
+        
+    }
+    
+    st_matrix("r(xi_s)",makesymmetric(xi_s))
+    st_matrixcolstripe("r(xi_s)",st_matrixcolstripe("r(xi)"))
+    st_matrixrowstripe("r(xi_s)",st_matrixrowstripe("r(xi)"))
 }
 
 
@@ -173,6 +207,7 @@ exit
 /*  _________________________________________________________________________
                                                               version history
 
+0.2.0   09aug2024   new option -symmetric-; not documented
 0.1.0   30apr2024   bug fix when y is constant
                     change order of results matrix; rows are xs, cols are ys
                     change returned results name: r(Xi) now r(xi)
