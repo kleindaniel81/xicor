@@ -1,4 +1,4 @@
-*! version 0.2.0  09aug2024
+*! version 0.3.0  12aug2025
 program xicor , rclass
     
     version 16.1
@@ -192,8 +192,8 @@ real scalar xicor_u(
 {
     return( // Chatterjee (2021, 2010); rearranged
         1 - 
-        ( (n^2)*quadcolsum(abs(r[p][2::n]-r[p][1::n-1])) ) / 
-        ( 2*(n^2)*quadcolsum(l[p]:-l[p]:^2) )
+        ( quadcolsum(abs(r[p][2::n]-r[p][1::n-1])) ) / 
+        ( 2*quadcolsum(l[p]:-l[p]:^2) )
         )
 }
 
@@ -207,6 +207,7 @@ exit
 /*  _________________________________________________________________________
                                                               version history
 
+0.3.0   12aug2025   cancel out n^2 in final computation
 0.2.0   09aug2024   new option -symmetric-; not documented
 0.1.0   30apr2024   bug fix when y is constant
                     change order of results matrix; rows are xs, cols are ys
