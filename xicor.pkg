@@ -11,10 +11,11 @@ d KW: association
 d
 d Requires: Stata version 16.1
 d
-d Distribution-Date: 20240809
+d Distribution-Date: 20250812
 d
 d Author: Daniel Klein
 d Support: email klein.daniel.81@gmail.com
 d
 f xicor.ado
 f xicor.sthlp
+
