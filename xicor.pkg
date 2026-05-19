@@ -1,17 +1,19 @@
 v 3
-d xicor: Stata module to compute xi correlation matrix
+d xicor: Stata module to compute Chatterjee's rank correlation
 d
 d
-d {cmd:xicor} computes a matrix of xi correlation coefficients 
-d (Chatterjee, 2021).
+d {cmd:xicor} estimates Chatterjee's (2021) rank correlation coefficient xi.
 d
+d KW: Chatterjee
 d KW: correlation
-d KW: spearman
-d KW: association
+d KW: dependence
+d KW: nonlinear
+d KW: ranks
+d KW: xi
 d
 d Requires: Stata version 16.1
 d
-d Distribution-Date: 20250812
+d Distribution-Date: 20260519
 d
 d Author: Daniel Klein
 d Support: email klein.daniel.81@gmail.com
